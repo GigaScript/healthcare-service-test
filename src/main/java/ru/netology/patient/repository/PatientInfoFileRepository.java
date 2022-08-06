@@ -47,14 +47,17 @@ public class PatientInfoFileRepository implements PatientInfoRepository {
             while (scanner.hasNextLine()) {
                 PatientInfo existsValue = mapper.readValue(scanner.nextLine(), PatientInfo.class);
                 if (isPatientExist(patientInfo, existsValue)) {
+                    System.out.println(info.getId());
                     throw new RuntimeException("Patient already exists");
                 }
             }
+
             String serializedPatientInfo = mapper.writeValueAsString(info);
             writer.append(String.format("%s%n", serializedPatientInfo));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+
         return info.getId();
     }
 
